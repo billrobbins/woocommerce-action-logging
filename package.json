@@ -1,9 +1,9 @@
 {
-	"name": "store",
-	"title": "Store",
+	"name": "woo-action-logging",
+	"title": "Woo Action Logging",
 	"license": "GPL-3.0-or-later",
 	"version": "0.1.0",
-	"description": "Store",
+	"description": "Log selected WooCommerce actions",
 	"scripts": {
 		"build": "wp-scripts build",
 		"check-engines": "wp-scripts check-engines",

@@ -16,7 +16,7 @@ class Action_Logging_Page {
      */
     public function register_sub_menu() {
         add_submenu_page( 
-            'tools.php', 'Action Logging', 'Action Logging', 'manage_options', 'submenu-page', array(&$this, 'admin_page_callback')
+            'tools.php', 'Action Logging', 'Action Logging', 'manage_options', 'action-logging', array(&$this, 'admin_page_callback')
         );
     }
  
@@ -25,7 +25,7 @@ class Action_Logging_Page {
      * @return void
      */
     public function admin_page_callback() {
-        echo '<div class="wrap"></div>';
+        echo '<div class="action-wrap"></div>';
     }
  
 }
