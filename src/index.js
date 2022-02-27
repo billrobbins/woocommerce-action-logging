@@ -8,10 +8,13 @@ import './index.scss';
 
 const RootComponent = () => {
 	const [actionList, updateActionList] = useState([]);
+
 	useEffect(() => {
-		list().then((response) => {
+		const loadList = async () => {
+			const response = await list();
 			updateActionList(response);
-		});
+		};
+		loadList();
 	}, []);
 
 	return (
