@@ -1,40 +1,59 @@
-import React, { useState } from 'react';
-import { edit } from './DataStore';
+import React, { useState, useEffect } from 'react';
+import { edit, list } from './DataStore';
+import { actionList } from './ActionOptions';
+import { Notice } from './Notice';
 
 export const AddLogger = () => {
-	const [logger, setLogger] = useState({});
-
-	const handleChange = (e) => {
-		const name = e.target.name;
-		const value = e.target.value;
-		setLogger((values) => ({ ...values, [name]: value }));
-	};
+	const [message, setMessage] = useState('');
+	const [logger, setLogger] = useState({
+		action: '',
+		arguments: '',
+		priority: '',
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const data = {
 			logger,
 		};
-		edit(data).then(() => {
-			setLogger('');
-		});
+		edit(data);
+		setMessage('Settings Saved');
 	};
 
 	const onCancel = () => {
-		setLogger({});
+		edit({});
+		setLogger({
+			action: '',
+			arguments: '',
+			priority: '',
+		});
 	};
+
+	useEffect(() => {
+		const loadOptions = async () => {
+			const response = await list();
+			setLogger({
+				action: response.action,
+				arguments: response.arguments,
+				priority: response.priority,
+			});
+		};
+		loadOptions();
+	}, []);
 
 	return (
 		<form className="add-logger" onSubmit={handleSubmit}>
 			<label htmlFor="action" className="option">
 				<p>Action</p>
-				<input
+				<select
 					name="action"
-					type="text"
-					className="regular-text"
-					value={logger.action || ''}
-					onChange={handleChange}
-				/>
+					value={logger.action}
+					onChange={(e) =>
+						setLogger({ ...logger, action: e.target.value })
+					}
+				>
+					{actionList}
+				</select>
 			</label>
 			<label htmlFor="arguments" className="option">
 				<p>Arguments</p>
@@ -42,8 +61,10 @@ export const AddLogger = () => {
 					name="arguments"
 					type="text"
 					className="regular-text"
-					value={logger.arguments || ''}
-					onChange={handleChange}
+					value={logger.arguments}
+					onChange={(e) =>
+						setLogger({ ...logger, arguments: e.target.value })
+					}
 				/>
 			</label>
 			<label htmlFor="priority" className="option">
@@ -52,8 +73,10 @@ export const AddLogger = () => {
 					name="priority"
 					type="number"
 					className="regular-text"
-					value={logger.priority || ''}
-					onChange={handleChange}
+					value={logger.priority}
+					onChange={(e) =>
+						setLogger({ ...logger, priority: e.target.value })
+					}
 				/>
 			</label>
 			<div className="button-group cancel-save">
@@ -65,6 +88,7 @@ export const AddLogger = () => {
 				</button>
 				<button className="button button-primary">Save</button>
 			</div>
+			<Notice message={message} />
 		</form>
 	);
 };

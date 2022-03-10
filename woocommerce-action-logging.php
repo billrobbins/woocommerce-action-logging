@@ -13,16 +13,20 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
+
  // Load REST API Endpoint
 require_once plugin_dir_path( __FILE__ ) . '/includes/class-endpoints.php';
 
 // Load Admin Page
 require_once plugin_dir_path( __FILE__ ) . '/includes/class-admin-page.php';
 
+ // Load Logging
+ require_once plugin_dir_path( __FILE__ ) . '/includes/class-logging-action.php';
+
 /**
  * Register and enqueue JS and CSS
  */
-function add_extension_register_script() {
+function wc_action_logging_scripts() {
 	if ( isset( $_GET['page'] ) && ! empty( $_GET['page'] ) && 'action-logging' !== $_GET['page'] ) {
 		return;
 	}
@@ -54,4 +58,4 @@ function add_extension_register_script() {
 	wp_enqueue_style( 'action-logging' );
 }
 
-add_action( 'admin_enqueue_scripts', 'add_extension_register_script' );
+add_action( 'admin_enqueue_scripts', 'wc_action_logging_scripts' );

@@ -1,41 +1,19 @@
 // Import SCSS entry file so that webpack picks up changes
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
-import { list } from './DataStore';
-import { Sidebar } from './Sidebar';
-import { ActionItem } from './ActionItem';
+import { AddLogger } from './AddLogger';
 import './index.scss';
 
 const RootComponent = () => {
-	const [actionList, updateActionList] = useState([]);
-
-	useEffect(() => {
-		const loadList = async () => {
-			const response = await list();
-			updateActionList(response);
-		};
-		loadList();
-	}, []);
-
 	return (
 		<>
-			<Sidebar />
-			<div className="actions-list">
-				<div className="action-list-header row">
-					<div className="action column">
-						<p className="heading">Action</p>
-					</div>
-					<div className="priority column">
-						<p className="heading">Priority</p>
-					</div>
-					<div className="arguments column">
-						<p className="heading">Arguments</p>
-					</div>
-				</div>
-				{actionList.map((item) => (
-					<ActionItem key={item.action} item={item} />
-				))}
-			</div>
+			<h1>WooCommerce Action Logging</h1>
+			<p>
+				Select an action to track along with the priority. Logs are
+				created by selected action and date. It is recommended to
+				disable this plugin once debugging is complete.
+			</p>
+			<AddLogger />
 		</>
 	);
 };
