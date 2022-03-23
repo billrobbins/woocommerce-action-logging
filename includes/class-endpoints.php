@@ -20,12 +20,16 @@ class Woo_Action_Logging_REST_Controller {
             array(
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => array( $this, 'read_option' ),
-                'permission_callback' => $this->get_options_permissions_check
+                'permission_callback' => function () {
+                    return current_user_can( 'edit_others_posts' );
+                  }
             ),
             array(
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => array( $this, 'edit_option' ),
-                'permission_callback' => $this->get_options_permissions_check
+                'permission_callback' => function () {
+                    return current_user_can( 'edit_others_posts' );
+                  }
             ),
         ) );
     }
@@ -61,34 +65,7 @@ class Woo_Action_Logging_REST_Controller {
         return $content;
         
     }
- 
-    /**
-     * Sets up the proper HTTP status code for authorization.
-     * @return HTTP status code
-     */
-    public function authorization_status_code() {
- 
-        $status = 401;
- 
-        if ( is_user_logged_in() ) {
-            $status = 403;
-        }
- 
-        return $status;
-    }
 
-    /**
-     * Check permissions for the options.
-     *
-     * @param WP_REST_Request $request Current request.
-     * @return boolean for permissions
-     */
-    public function get_options_permissions_check() {
-        if ( ! current_user_can( 'edit_posts' ) ) {
-            return new WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the options.  Sorry!' ), array( 'status' => $this->authorization_status_code() ) );
-        }
-        return true;
-    }
 }
  
     /**
