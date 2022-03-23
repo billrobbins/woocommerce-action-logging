@@ -10,11 +10,13 @@ class CreateWCActionLog {
 	public $action;
 
 	function __construct() {
+
 		$this->action = get_option( 'woo_action_logging_settings' );
 
-		if( isset( $action['priority'] ) && isset( $action['action'] ) ) {
+		if( isset( $this->action['priority']) && isset( $this->action['action'] ) ) {
 			add_action( $this->action['action'], [ $this, 'track_action_use' ], $this->action['priority'] );
-		}
+		} 
+		
 	}
 
 	function track_action_use( $object_id ) {
