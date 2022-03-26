@@ -4,7 +4,7 @@
  * Plugin Name:       WooCommerce Action Logging
  * Plugin URI:        https://github.com/billrobbins/woocommerce-action-logging
  * Description:       Logs a stack backtrace whenever a specified WooCommerce hook is used 
- * Version:           0.0
+ * Version:           0.1
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Bill Robbins
